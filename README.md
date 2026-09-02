@@ -5,6 +5,7 @@ A dbt + PostgreSQL analytics pipeline built end to end: three source systems, el
 The setting is fictional — an underground silo with 144 levels, borrowed from the Apple TV series. The engineering is not. The dataset was generated with deliberate defects modelled on the ones that actually break production pipelines: duplicate rows from failed syncs, empty strings masquerading as nulls, sensor faults, unmapped reference codes, and records arriving days after the timestamp they carry.
 
 ![Lineage graph](docs/images/lineage_graph.png)
+**[→ Browse the interactive lineage graph and data catalog](https://brandonmuch.github.io/silo-analytics-dbt/)**
 
 ---
 
