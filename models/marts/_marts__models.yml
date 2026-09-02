@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: fct_level_monthly_occupancy
+    description: >
+      One row per level per month, 2022-2024. Point-in-time occupancy derived
+      from resident dwelling history. Month-over-month movement calculated here
+      once. All rows retained; use the is_ flags to filter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - level_number
+              - month_start
+    columns:
+      - name: level_month_id
+        data_tests:
+          - unique
+          - not_null
+      - name: occupancy_trend
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['baseline', 'growing', 'shrinking', 'stable']
+
+  - name: fct_department_monthly_staffing
+    description: >
+      One row per department per month. KNOWN ISSUE: establishment_headcount
+      from works_db.departments does not reconcile with actual assignment
+      volumes - fill rates run 2.6x to 25x. Raised with the Works Department.
+      Headcount figures are reliable; fill_rate is not, pending correction
+      of the establishment reference data.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - department_code
+              - month_start
+    columns:
+      - name: department_month_id
+        data_tests:
+          - unique
+          - not_null
+      - name: headcount
+        data_tests:
+          - not_null
+      - name: establishment_fill_rate
+        description: "Headcount / establishment. Currently unreliable - see model description."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 2
+              config:
+                severity: warn

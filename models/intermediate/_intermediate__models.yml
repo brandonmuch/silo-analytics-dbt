@@ -1,0 +1,101 @@
+version: 2
+
+models:
+  - name: int_residents_by_level
+    description: >
+      One row per resident, enriched with their dwelling, level, and zone.
+      All joins are many-to-one so the grain must remain one row per resident.
+    columns:
+      - name: resident_id
+        description: "Primary key. Grain of this model."
+        data_tests:
+          - unique
+          - not_null
+      - name: level_number
+        description: "Level 1 (top) to 144 (bottom)."
+        data_tests:
+          - not_null
+      - name: zone_name
+        description: "Up Top | Mids | Down Deep. Null means the level is missing from the Supply seed."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Up Top', 'Mids', 'Down Deep']
+
+  - name: int_level_monthly_population
+    description: >
+      One row per level per month, 2022-2024. Built from a generated date spine
+      cross-joined to all 144 levels, so months with zero residents appear as
+      zeros rather than missing rows.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - month_start
+              - level_number
+    columns:
+      - name: month_start
+        description: "First day of the month. Grain component."
+        data_tests:
+          - not_null
+      - name: level_number
+        description: "Level 1-144. Grain component."
+        data_tests:
+          - not_null
+      - name: active_residents
+        description: "Residents with status 'active' present on this level in this month."
+        data_tests:
+          - not_null
+
+  - name: int_assignment_months
+    description: >
+      One row per assignment per month it was active, 2022-2024. Built by range
+      joining assignments to a monthly spine, with an explicit null branch so
+      current (open-ended) assignments are retained. Department codes absent
+      from the Works reference table are surfaced as 'UNMAPPED' rather than dropped.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - assignment_id
+              - month_start
+    columns:
+      - name: month_start
+        data_tests:
+          - not_null
+      - name: assignment_id
+        data_tests:
+          - not_null
+      - name: department_name
+        description: "Department name, or 'UNMAPPED' where the code is missing upstream."
+        data_tests:
+          - not_null
+      - name: is_unmapped_department
+        description: "True where department_code has no match in works_db.departments. ~2% of rows."
+        data_tests:
+          - not_null
+  - name: int_generator_daily
+    description: >
+      One row per generator per day. INCREMENTAL with a 14-day lookback window,
+      sized against a measured worst-case sync lag of 9 days across 767 rows.
+      delete+insert on generator_day_id makes reprocessing idempotent.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - generator_id
+              - reading_date
+    columns:
+      - name: generator_day_id
+        description: "Surrogate key: hash of generator_id and reading_date."
+        data_tests:
+          - unique
+          - not_null
+      - name: avg_output_kw
+        description: "Mean output. Nulls where all readings that day were faulty."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true

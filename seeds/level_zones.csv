@@ -1,0 +1,145 @@
+level_number,zone_name,supply_tier,has_lift_access
+1,Up Top,1,true
+2,Up Top,1,false
+3,Up Top,1,false
+4,Up Top,1,false
+5,Up Top,1,false
+6,Up Top,1,false
+7,Up Top,1,false
+8,Up Top,1,false
+9,Up Top,1,false
+10,Up Top,1,false
+11,Up Top,1,false
+12,Up Top,1,true
+13,Up Top,1,false
+14,Up Top,1,false
+15,Up Top,1,false
+16,Up Top,1,false
+17,Up Top,1,false
+18,Up Top,1,false
+19,Up Top,1,false
+20,Up Top,1,false
+21,Mids,2,false
+22,Mids,2,false
+23,Mids,2,false
+24,Mids,2,true
+25,Mids,2,false
+26,Mids,2,false
+27,Mids,2,false
+28,Mids,2,false
+29,Mids,2,false
+30,Mids,2,false
+31,Mids,2,false
+32,Mids,2,false
+33,Mids,2,false
+34,Mids,2,true
+35,Mids,2,false
+36,Mids,2,true
+37,Mids,2,false
+38,Mids,2,false
+39,Mids,2,false
+40,Mids,2,false
+41,Mids,2,false
+42,Mids,2,false
+43,Mids,2,false
+44,Mids,2,false
+45,Mids,2,false
+46,Mids,2,false
+47,Mids,2,false
+48,Mids,2,true
+49,Mids,2,false
+50,Mids,2,false
+51,Mids,2,false
+52,Mids,2,false
+53,Mids,2,false
+54,Mids,2,false
+55,Mids,2,false
+56,Mids,2,true
+57,Mids,2,false
+58,Mids,2,false
+59,Mids,2,false
+60,Mids,2,true
+61,Mids,2,false
+62,Mids,2,false
+63,Mids,2,false
+64,Mids,2,false
+65,Mids,2,false
+66,Mids,2,false
+67,Mids,2,false
+68,Mids,2,false
+69,Mids,2,false
+70,Mids,2,false
+71,Mids,2,false
+72,Mids,2,true
+73,Mids,2,false
+74,Mids,2,false
+75,Mids,2,false
+76,Mids,2,false
+77,Mids,2,false
+78,Mids,2,false
+79,Mids,2,false
+80,Mids,2,false
+81,Mids,2,false
+82,Mids,2,false
+83,Mids,2,false
+84,Mids,2,true
+85,Mids,2,false
+86,Mids,2,false
+87,Mids,2,false
+88,Mids,2,false
+89,Mids,2,false
+90,Mids,2,false
+91,Mids,2,false
+92,Mids,2,false
+93,Mids,2,false
+94,Mids,2,false
+95,Mids,2,false
+96,Mids,2,true
+97,Mids,2,false
+98,Mids,2,false
+99,Mids,2,false
+100,Mids,2,false
+101,Down Deep,3,false
+102,Down Deep,3,false
+103,Down Deep,3,false
+104,Down Deep,3,false
+105,Down Deep,3,false
+106,Down Deep,3,false
+107,Down Deep,3,false
+108,Down Deep,3,true
+109,Down Deep,3,false
+110,Down Deep,3,false
+111,Down Deep,3,false
+112,Down Deep,3,false
+113,Down Deep,3,false
+114,Down Deep,3,false
+115,Down Deep,3,false
+116,Down Deep,3,false
+117,Down Deep,3,false
+118,Down Deep,3,false
+119,Down Deep,3,false
+120,Down Deep,3,true
+121,Down Deep,3,false
+122,Down Deep,3,false
+123,Down Deep,3,false
+124,Down Deep,3,false
+125,Down Deep,3,false
+126,Down Deep,3,false
+127,Down Deep,3,false
+128,Down Deep,3,false
+129,Down Deep,3,false
+130,Down Deep,3,false
+131,Down Deep,3,false
+132,Down Deep,3,true
+133,Down Deep,3,false
+134,Down Deep,3,false
+135,Down Deep,3,false
+136,Down Deep,3,false
+137,Down Deep,3,false
+138,Down Deep,3,false
+139,Down Deep,3,false
+140,Down Deep,3,false
+141,Down Deep,3,false
+142,Down Deep,3,false
+143,Down Deep,3,false
+144,Down Deep,3,true

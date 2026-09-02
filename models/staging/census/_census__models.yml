@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: stg_census__residents
+    description: >
+      One row per resident. Deduplicated on resident_id keeping the most recently
+      synced row. Status normalised to a controlled vocabulary; undocumented and
+      empty values become 'unknown'. Soft-deleted rows excluded.
+    columns:
+      - name: resident_id
+        description: "Primary key."
+        data_tests:
+          - unique
+          - not_null
+      - name: dwelling_id
+        description: "FK to stg_census__dwellings."
+        data_tests:
+          - not_null
+      - name: resident_status
+        description: "active | deceased | relocated | unknown"
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['active', 'deceased', 'relocated', 'unknown']
+
+  - name: stg_census__dwellings
+    description: "One row per dwelling unit. Each belongs to exactly one level."
+    columns:
+      - name: dwelling_id
+        description: "Primary key."
+        data_tests:
+          - unique
+          - not_null
+      - name: level_number
+        description: "Level 1 (top) to 144 (bottom)."
+        data_tests:
+          - not_null
+
+  - name: stg_census__relocations
+    description: "One row per approved relocation. Blank reasons become 'UNSPECIFIED'."
+    columns:
+      - name: relocation_id
+        data_tests:
+          - unique
+          - not_null
+      - name: resident_id
+        description: "FK to stg_census__residents."
+        data_tests:
+          - not_null

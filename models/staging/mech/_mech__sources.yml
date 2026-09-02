@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+  - name: mech_db
+    description: "Mechanical Department equipment and generator telemetry."
+    database: silo
+    schema: mech_db
+
+    tables:
+      - name: equipment
+        description: "One row per tracked piece of equipment, with a criticality rating."
+        columns:
+          - name: equipment_id
+            data_tests:
+              - unique
+              - not_null
+
+      - name: generator_readings
+        description: >
+          Hourly telemetry per generator, 2022-2024. Contains sensor faults
+          (negative and null outputs) and duplicate rows from double-syncs.
+          Around 0.5% of readings sync several days after read_at.
+        loaded_at_field: "_synced_at"
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 48, period: hour}
+        columns:
+          - name: reading_id
+            data_tests:
+              - unique:
+                  config:
+                    severity: warn
+
+      - name: maintenance_orders
+        description: "One row per maintenance work order. Around 1% close before they open."
+        columns:
+          - name: order_id
+            data_tests:
+              - unique
+              - not_null

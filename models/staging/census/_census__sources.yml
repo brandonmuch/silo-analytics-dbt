@@ -1,0 +1,39 @@
+version: 2
+
+sources:
+  - name: census_db
+    description: "Census Office population register. Replicated hourly."
+    database: silo
+    schema: census_db
+
+    tables:
+      - name: residents
+        description: >
+          One row per registered resident. Status values arrive in inconsistent
+          casing and include empty strings. Soft-deleted rows are flagged with
+          _deleted and must be excluded downstream.
+        columns:
+          - name: resident_id
+            description: "Primary key from the Census register."
+            data_tests:
+              - unique:
+                  config:
+                    severity: warn
+              - not_null
+
+      - name: dwellings
+        description: "One row per dwelling unit. A dwelling belongs to exactly one level."
+        columns:
+          - name: dwelling_id
+            description: "Primary key. Format DW-<level>-<unit>."
+            data_tests:
+              - unique
+              - not_null
+
+      - name: relocations
+        description: "One row per approved relocation between dwellings."
+        columns:
+          - name: relocation_id
+            data_tests:
+              - unique
+              - not_null

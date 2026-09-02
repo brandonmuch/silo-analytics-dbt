@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: works_db
+    description: "Works Department job assignment system."
+    database: silo
+    schema: works_db
+
+    tables:
+      - name: departments
+        description: "Reference list of departments with their authorised establishment headcount."
+        columns:
+          - name: department_code
+            description: "Primary key. Short code, e.g. MECH, IT, SUP."
+            data_tests:
+              - unique
+              - not_null
+
+      - name: job_assignments
+        description: >
+          One row per job assignment. Rows are UPDATED IN PLACE when a resident is
+          reassigned, so this table holds current state only and loses history.
+          Snapshotted separately. Around 2% of rows carry department codes that do
+          not exist in the departments table.
+        columns:
+          - name: assignment_id
+            data_tests:
+              - unique
+              - not_null
+          - name: resident_id
+            data_tests:
+              - not_null
